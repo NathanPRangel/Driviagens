@@ -1,6 +1,6 @@
 import { stripHtml } from "string-strip-html";
 import { SalveFlights, SearchFlightsByBiggerSmaller, SearchFlightsByDestination, SearchFlightsByDestinationBiggerSmaller, SearchFlightsByDestinationOrder, SearchFlightsByDestinationOrderBiggerSmaller, SearchFlightsByOrigin, SearchFlightsByOriginBiggerSmaller, getFlightsByOrder, idExistsDestination, idExistsOrigin } from "../repository/flights.repository.js";
-import Joi from "joi";
+
 
 export async function postFlights(req, res) {
 
