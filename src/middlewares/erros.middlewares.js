@@ -1,39 +1,21 @@
 import httpStatus from "http-status";
 
 export default function errorHandler(error, req, res, next) {
-    console.log(error);
+    console.error(error);
 
-    if (error.type === "conflict") {
-        return res.status(httpStatus.CONFLICT).send(error.message);
-    }
+    const errorTypes = {
+        conflict: httpStatus.CONFLICT,
+        notFound: httpStatus.NOT_FOUND,
+        incompleteData: httpStatus.UNPROCESSABLE_ENTITY,
+        invalidId: httpStatus.UNPROCESSABLE_ENTITY,
+        InternalServerError: httpStatus.INTERNAL_SERVER_ERROR,
+        UnprocessableEntityforDate: httpStatus.UNPROCESSABLE_ENTITY,
+        UnprocessableEntity: httpStatus.UNPROCESSABLE_ENTITY,
+        BadRequest: httpStatus.BAD_REQUEST,
+    };
 
-    if (error.type === "notFound") {
-        return res.status(httpStatus.NOT_FOUND).send(error.message);
-    }
+    const statusCode = errorTypes[error.type] || httpStatus.INTERNAL_SERVER_ERROR;
+    const errorMessage = error.message || "Desculpe, houve um erro! 😢";
 
-    if (error.type === "incompleteData") {
-        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
-    }
-
-    if (err.type === "invalidId") {
-        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(err.message)
-    }
-
-    if (err.type === "InternalServerError") {
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message)
-    }
-
-    if (err.type === "UnprocessableEntityforDate") {
-        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(err.message)
-    }
-
-    if (err.type === "UnprocessableEntity") {
-        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(err.message)
-    }
-
-    if (err.type === "BadRequest") {
-        return res.status(httpStatus.BAD_REQUEST).send(err.message)
-    }
-
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Desculpe, houve um erro! 😢");
+    res.status(statusCode).send(errorMessage);
 }
