@@ -15,7 +15,7 @@ export default function errorHandler(error, req, res, next) {
     };
 
     const statusCode = errorTypes[error.type] || httpStatus.INTERNAL_SERVER_ERROR;
-    const errorMessage = error.message || "Desculpe, houve um erro! 😢";
+    const errorMessage = error.message || "Desculpe, houve um erro!";
 
     res.status(statusCode).send(errorMessage);
 }
